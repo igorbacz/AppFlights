@@ -1,7 +1,7 @@
 import { parse, toSeconds } from "iso8601-duration";
 
 const ABBREVIATIONS = {
-  HOURS: "h",
+  HOURS: "u",
   MINUTES: "m",
 };
 

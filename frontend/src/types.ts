@@ -1,17 +1,17 @@
 
-export interface Flight {
+export interface FlightInterface {
   uuid: string;
-  airlineCode:string;
-  price:Price;
-  bounds:Bound[];
-  details:Details;
+  airlineCode: string;
+  price: Price;
+  bounds: Bound[];
+  details?: Details;
 }
 
-interface Price {
+export interface Price {
   amount: number;
-  currency:string;
+  currency: string;
 }
-interface Bound {
+export interface Bound {
   departure: {
     code: string;
     name: string;
@@ -19,7 +19,7 @@ interface Bound {
   };
   destination: {
     code: string;
-    name:string;
+    name: string;
     dateTime: string;
   };
   duration: string;

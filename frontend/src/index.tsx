@@ -3,14 +3,15 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { FlightsProvider } from "./context/ContextProvider";
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <FlightsProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </FlightsProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
