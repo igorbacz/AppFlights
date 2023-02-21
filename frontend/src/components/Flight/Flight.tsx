@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { flight, FlightInterface } from "../../types";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
 import { useHistory } from "react-router-dom";
+import Modal from '../Flight/Modal'
 import {
   FlightContainer,
   LogoBoxTop,
@@ -40,12 +41,15 @@ import {
 } from "./styles";
 import moment from "moment";
 import { formatDuration } from "../../utils/duration";
+import { useState } from "react";
 
 export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): JSX.Element => {
   let fullDate1 = new Date(bounds[0].departure.dateTime);
   const departureDay1 = moment(fullDate1).locale("nl").format("dd DD MMM");
   const departureTime1 = moment(fullDate1).format("h:mm");
   const duration1 = formatDuration(bounds[0].duration);
+
+  const [openModal, setOpenModal] = useState(false)
 
   console.log(fullDate1.getUTCHours());
   let history = useHistory();
@@ -101,7 +105,8 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): J
       </DayBoxRightTop>
 
       <DetailsBox>
-        <StyledFontSmall>Vluchtdetails</StyledFontSmall>
+        <StyledFontSmall onClick={() => {setOpenModal(true)}}>Vluchtdetails</StyledFontSmall>
+        {openModal && <Modal closeModal={setOpenModal}/> }
       </DetailsBox>
 
       <BorderBox />
