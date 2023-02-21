@@ -1,4 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
+import { MouseEventHandler } from "react";
+import { ChangeEvent } from "react";
 import styled from "styled-components";
 import { FlightsContext } from "../../context/ContextProvider";
 
@@ -24,34 +26,23 @@ export const StyledButton = styled.button`
   }
 `;
 
-// export const StyledSelect = styled.div`
-//   width: 180px;
-//   height: 48px;
-//   background: #008eff 0% 0% no-repeat padding-box;
-//   border-radius: 24px;
-// `;
-
 export const SearchBar = () => {
-  // const [sort, setSort] = useState("Price");
   const appContext: {
     sorting?: string;
-    setSorting?: React.Dispatch<React.SetStateAction<string>>;
+    setSorting?: React.Dispatch<React.SetStateAction<string>> | null;
   } = useContext(FlightsContext);
 
-  const { sorting, setSorting } = appContext;
-
-  const sortHandler = (event: any) => {
-    const target = event.target as HTMLInputElement;
+  const { sorting = "price", setSorting } = appContext;
+  const sortHandler = (event: ChangeEvent<HTMLSelectElement>) => {
+    const target = event.target as HTMLSelectElement;
     //@ts-ignore
-    console.log(target.value);
-    //@ts-ignore
-    setSorting(target.value);
+    setSorting(event.target.value);
   };
   console.log(sorting);
   return (
     <div>
       <label>Select by :</label>
-      <select title="Price" onClick={sortHandler}>
+      <select title="Price" onChange={sortHandler}>
         <option value="price">Cheapest first</option>
         <option value="time">Fastest first</option>
       </select>

@@ -8,11 +8,11 @@ const Routes = () => {
       <Route path="/flights">
         <Flights />
       </Route>
-      <Route path="*">
-        <Redirect to="flights" />
-      </Route>
       <Route path="/confirmation">
         <ConfirmationPage />
+      </Route>
+      <Route path="*">
+        <Redirect to="flights" />
       </Route>
     </Switch>
   );

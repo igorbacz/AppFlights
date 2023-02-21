@@ -37,14 +37,22 @@ const FlightsProvider = ({ children }: any) => {
   const sortedHandler = () => {
     if (sorting === "price") {
       let sortedData = data.sort((a, b) => {
-        return a.price.amount - b.price.amount;
+        const x = a.price.amount;
+        const y = b.price.amount;
+        return x - y;
       });
       setSortedData(sortedData);
       setData(sortedData);
-      console.log(sortedData);
+    } else if (sorting === "time") {
+      let sortedData = data.sort((a, b) => {
+        const x = new Date(b.bounds[1]?.departure.dateTime).valueOf();
+        const y = new Date(a.bounds[1]?.departure.dateTime).valueOf();
+        return x - y;
+      });
+      setSortedData(sortedData);
+      setData(sortedData);
     }
   };
-
   return (
     <FlightsContext.Provider
       value={{

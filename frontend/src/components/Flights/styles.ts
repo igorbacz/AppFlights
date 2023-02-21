@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const FlightsContainer = styled.div`
+export const ViewContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -9,9 +9,10 @@ export const ConfirmationBox = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  gap: 20px;
 `;
 
 export const ConfirmTextBox = styled.div`
   display: flex;
-  gap: 25px;
+  gap: 50px;
 `;

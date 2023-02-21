@@ -43,10 +43,12 @@ import {
 } from "./styles";
 import moment from "moment";
 import { formatDuration } from "../../utils/duration";
+import { parse, toSeconds } from "iso8601-duration";
 
 export const FlightNaSztywno = () => {
   let fullDate1 = new Date(flight.bounds[0].departure.dateTime);
   let fullDate2 = new Date(flight.bounds[1].departure.dateTime);
+  // co;
 
   const departureTime1 = moment(fullDate1).format("hh:mm");
   const departureTime2 = moment(fullDate2).format("hh:mm");
@@ -57,16 +59,26 @@ export const FlightNaSztywno = () => {
   const duration1 = formatDuration(flight.bounds[0].duration);
   const duration2 = formatDuration(flight.bounds[1].duration);
 
+  console.log(fullDate1.getUTCHours());
+
   const addDuartion = (date: Date, hours: number, minutes: number) => {
     date.setDate(date.getHours() + hours && date.getMinutes() + minutes);
     return date;
   };
 
+  const dateOfDestination = (isoDuration: string, fullDate: Date): Date => {
+    const durationSeconds = toSeconds(parse(isoDuration));
+    console.log(durationSeconds);
+    const dateSeconds = fullDate.getSeconds();
+    console.log(dateSeconds);
+    return new Date(durationSeconds + dateSeconds);
+  };
+
+  console.log(dateOfDestination(flight.bounds[0].duration, fullDate1));
+
   const date = new Date("2022-05-15T00:00:00.000Z");
 
   const destinationFullDate1 = addDuartion(fullDate1, 7, 14);
-  console.log(fullDate1);
-  console.log(destinationFullDate1);
 
   const destinationTime1 = moment(destinationFullDate1).format("hh:mm");
 
