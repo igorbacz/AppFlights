@@ -1,5 +1,5 @@
 import { Redirect, Route, Switch } from "react-router-dom";
-import { ConfirmationPage } from "../views/Confirmation/ConfirmationPage";
+import { Confirmation } from "./Confirmation/Confirmation";
 import Flights from "./Flights";
 
 const Routes = () => {
@@ -9,7 +9,7 @@ const Routes = () => {
         <Flights />
       </Route>
       <Route path="/confirmation">
-        <ConfirmationPage />
+        <Confirmation />
       </Route>
       <Route path="*">
         <Redirect to="flights" />

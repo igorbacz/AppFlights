@@ -47,6 +47,7 @@ export const PriceContainer = styled.div`
 `;
 export const PriceBox = styled.div`
   background-color: #fcc002;
+  z-index: 3;
   @media ${device.desktop} {
     grid-column: 6/7;
     grid-row: 4/7;
@@ -95,6 +96,7 @@ export const StyledButton = styled.button`
   padding-bottom: 10px;
   padding-top: 10px;
   cursor: pointer;
+  z-index:2;
 font-weight: bold;
   &:hover {
     background: white;
@@ -498,8 +500,13 @@ export const LineBoxBottom = styled.div`
 `;
 
 export const TriangleBox = styled.div`
+  z-index: 0;
   @media ${device.mobile} {
-    //TODO
+    grid-column: 2/3;
+    grid-row: 7/8;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 52px;
   }
   @media ${device.tablet} {
     grid-column: 4/5;
@@ -522,14 +529,6 @@ export const Triangle = styled.div`
   height: 26px;
   transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
   background: #fcc002 0% 0% no-repeat padding-box;
-
-  //TODO remove ?
-  @media ${device.mobile} {
-  }
-  @media ${device.tablet} {
-  }
-  @media ${device.desktop} {
-  }
 `;
 
 export const StyledFontSmall = styled.p`
@@ -541,6 +540,8 @@ export const StyledFontSmall = styled.p`
 `;
 
 export const DetailsBox = styled.div`
+  cursor: pointer;
+  padding-top: 13px;
   @media ${device.mobile} {
     grid-column: 3/4;
     grid-row: 1/2;
@@ -606,5 +607,46 @@ export const DurationBottomBox = styled.div`
     display: flex;
     align-items: flex-end;
     justify-content: center;
+  }
+`;
+
+export const DetailsContainer = styled.div`
+  padding: 20px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // height: 150px;
+  gap: 10px;
+  @media ${device.desktop} {
+    width: 550px;
+  }
+  @media ${device.tablet} {
+    width: 450px;
+  }
+  @media ${device.mobile} {
+    width: 280px;
+  }
+`;
+
+export const StyledTable = styled.table`
+  border-collapse: collapse;
+  width: 80%;
+`;
+
+export const StyledTd = styled.td`
+  font-size: 13px;
+  border: 1px solid #54585d;
+`;
+
+export const StyledCloseButton = styled.button`
+  border-radius: 90px;
+  background-color: #fcc002;
+  width: 50%;
+  cursor: pointer;
+  border: solid 2px #fcc002;
+  &:hover {
+    border: solid 2px #fcc002;
+    background-color: white;
   }
 `;

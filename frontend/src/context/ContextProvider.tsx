@@ -1,13 +1,12 @@
-import { createContext, useEffect, useState } from "react";
-import React from "react";
+import React, { createContext, useEffect } from "react";
 import { FlightInterface } from "../types";
 
 const FlightsContext = createContext({});
 
-const FlightsProvider = ({ children }: any) => {
-  const [data, setData] = useState<FlightInterface[]>([]);
-  const [sortedData, setSortedData] = useState<FlightInterface[]>([]);
-  const [sorting, setSorting] = useState("price");
+const FlightsProvider = ({ children }: { children: React.ReactNode }) => {
+  const [data, setData] = React.useState<FlightInterface[]>([]);
+  const [sortedData, setSortedData] = React.useState<FlightInterface[]>([]);
+  const [sorting, setSorting] = React.useState("price");
 
   const getFlights = async () => {
     const response = await fetch("http://localhost:3001/flights", {
@@ -19,9 +18,7 @@ const FlightsProvider = ({ children }: any) => {
     if (!response.ok) {
       throw new Error("Could not fetch flights data");
     }
-
     const data = await response.json();
-    console.log(data);
     setData(data);
     return data;
   };
@@ -32,32 +29,32 @@ const FlightsProvider = ({ children }: any) => {
 
   useEffect(() => {
     sortedHandler();
+    console.log(sorting);
   }, [sorting, data]);
 
   const sortedHandler = () => {
     if (sorting === "price") {
-      let sortedData = data.sort((a, b) => {
+      let sortedFlights = data.sort((a, b) => {
         const x = a.price.amount;
         const y = b.price.amount;
         return x - y;
       });
-      setSortedData(sortedData);
-      setData(sortedData);
+      setSortedData(sortedFlights);
+      // Object.assign(sortedData, sortedFlights);
     } else if (sorting === "time") {
-      let sortedData = data.sort((a, b) => {
-        const x = new Date(b.bounds[1]?.departure.dateTime).valueOf();
-        const y = new Date(a.bounds[1]?.departure.dateTime).valueOf();
-        return x - y;
+      let sortedFlights = data.sort((a, b) => {
+        const x: number = new Date(b.bounds[0]?.departure.dateTime).valueOf();
+        const y: number = new Date(a.bounds[0]?.departure.dateTime).valueOf();
+        return y - x;
       });
-      setSortedData(sortedData);
-      setData(sortedData);
+      // console.log(sortedData);
+      setSortedData(sortedFlights);
+      Object.assign(sortedData, sortedFlights);
     }
   };
   return (
     <FlightsContext.Provider
       value={{
-        data,
-        setData,
         sorting,
         setSorting,
         sortedData,

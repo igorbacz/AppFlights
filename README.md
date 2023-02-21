@@ -23,6 +23,9 @@ The solution should contain the following elements:
 
 ### Breakpoints
 ```
+Mobile: 375px -> 767px
+Tablet: 768px -> 1023px
+Desktop: >= 1024px
 ```
 
 ### Design guidelines

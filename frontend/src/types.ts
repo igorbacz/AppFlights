@@ -25,11 +25,11 @@ export interface Bound {
   duration: string;
 }
 
-interface Details {
-  remainingNumberOfSeats: number
-  seatPitch: number
-  freeBaggageAllowed: boolean
-  cabinClass: string
+export interface Details {
+  remainingNumberOfSeats: number;
+  seatPitch: number;
+  freeBaggageAllowed: boolean;
+  cabinClass: string;
 }
 
 export const flight = {
