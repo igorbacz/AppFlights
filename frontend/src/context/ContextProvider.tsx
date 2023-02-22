@@ -38,16 +38,14 @@ const FlightsProvider = ({ children }: { children: React.ReactNode }) => {
         const y = b.price.amount;
         return x - y;
       });
-      setSortedData(sortedFlights);
-      // Object.assign(sortedData, sortedFlights);
+      setSortedData([...sortedFlights]);
     } else if (sortSelect === "time") {
       let sortedFlights = data.sort((a, b) => {
         const x: number = new Date(b.bounds[0]?.departure.dateTime).valueOf();
         const y: number = new Date(a.bounds[0]?.departure.dateTime).valueOf();
         return y - x;
       });
-      setSortedData(sortedFlights);
-      // Object.assign(sortedData, sortedFlights);
+      setSortedData([...sortedFlights]);    
     }
   };
   return (

@@ -15,11 +15,9 @@ const Flights = () => {
   const { sortedData, sortSelect, setSortedData } = appContext;
 
   useEffect(() => {
+    setSortedData([...sortedData]);
     console.log(sortSelect);
-
-    setSortedData(sortedData);
-    console.log(sortSelect);
-  }, [sortSelect]);
+  }, []);
 
   return (
     <ViewContainer>
