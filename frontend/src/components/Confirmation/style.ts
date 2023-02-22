@@ -1,18 +1,50 @@
 import styled from "styled-components";
+import { device } from "../../utils/breakpoints";
 
+export const ConfirmPageContainer = styled.div`
+  padding-top: 20vw;
+
+  @media ${device.desktop} {
+    display: flex;
+    justify-content: center;
+  }
+  @media ${device.tablet} {
+    display: flex;
+    justify-content: center;
+  }
+  @media ${device.mobile} {
+    display: flex;
+  }
+`;
 export const ConfirmationBox = styled.div`
-  display: flex;
-  width: 400px;
+  width: 350px;
   height: 200px;
   background: #ffffff 0% 0% no-repeat padding-box;
   padding: 50px;
+
+  gap: 20px;
+  display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  gap: 20px;
 `;
 
 export const ConfirmTextBox = styled.div`
-  display: flex;
-  gap: 50px;
+  @media ${device.desktop} {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+  }
+  @media ${device.tablet} {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  @media ${device.mobile} {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+  }
 `;

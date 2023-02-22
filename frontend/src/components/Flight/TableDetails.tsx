@@ -1,5 +1,5 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
-import { Details } from "../../types";
+import { Dispatch, SetStateAction, useState } from "react";
+import { Details } from "../../types/types";
 import { StyledCloseButton, StyledTable, StyledTd } from "./styles";
 
 type Props = {

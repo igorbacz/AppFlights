@@ -1,15 +1,12 @@
 import { faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { ButtonBox, StyledBoldBig, StyledButton, StyledFontLight, StyledFontMedium } from "../Flight/styles";
-import { ViewContainer } from "../Flights/styles";
-import { ConfirmationBox, ConfirmTextBox } from "./style";
+import { ButtonBox, StyledButton, StyledFontLight } from "../Flight/styles";
+import { ConfirmationBox, ConfirmPageContainer, ConfirmTextBox } from "./style";
 
 export const Confirmation = () => {
   return (
-    <ViewContainer>
+    <ConfirmPageContainer>
       <ConfirmationBox>
         <ConfirmTextBox>
           <FontAwesomeIcon icon={faPlaneDeparture} size="3x" color="#FCC002" />
@@ -21,6 +18,6 @@ export const Confirmation = () => {
           </Link>
         </ButtonBox>
       </ConfirmationBox>
-    </ViewContainer>
+    </ConfirmPageContainer>
   );
 };

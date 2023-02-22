@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Details, flight, FlightInterface } from "../../types";
+import { Details, flight, FlightInterface } from "../../types/types";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
 import { useHistory } from "react-router-dom";
 import {
@@ -41,34 +41,14 @@ import {
 } from "./styles";
 import moment from "moment";
 import { formatDuration } from "../../utils/duration";
-import { dateDestinationISO } from "../../utils/destinationTime";
 import { useState } from "react";
 import { TableDetails } from "./TableDetails";
 
 moment.locale("nl");
 
 export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): JSX.Element => {
-  // const [openDetails, setOpenDetails] = useState(false);
   const [currentFlightDetails, setCurrentFlightDetails] = useState<Details>();
   const [openDetails, setOpenDetails] = useState(false);
-
-  let fullDate1 = new Date(bounds[0].departure.dateTime);
-  // let fullDate2 = new Date(bounds[0]?.departure.dateTime);
-  // const departureDay1 = moment(bounds[0].departure.dateTime).locale("nl").format("dd DD MMM");
-  // const departureTime1 = moment(bounds[0].departure.dateTime).format("h:mm");
-  // const duration1 = formatDuration(bounds[0].duration);
-  // // console.log(dateDestinationISO(flight.bounds[0].duration, fullDate1));
-
-  // const departureDay2 = moment(bounds[1].departure.dateTime).locale("nl").format("dd DD MMM");
-
-  const dateDestinationObject1 = new Date(dateDestinationISO(bounds[0].duration, fullDate1));
-
-  // const dateDestinationObject2 = new Date(dateDestinationISO(bounds[1]?.duration, fullDate1));
-  const destinationDay1 = moment(dateDestinationObject1).locale("nl").format("dd DD MMM");
-  // console.log(destinationDay1);
-  const departureTime1 = moment(dateDestinationObject1).format("h:mm");
-  // console.log(departureTime1);
-
   let history = useHistory();
 
   const bookFlight = async () => {
@@ -100,6 +80,7 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): J
     setCurrentFlightDetails(data);
     return data;
   };
+
   const handleCheckDetails = () => {
     getFlyightDetails();
     setOpenDetails(true);
@@ -136,10 +117,10 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): J
           <StyledFontMedium>{bounds[0].destination.code}</StyledFontMedium>
         </FromBoxRightTop>
         <HourBoxRightTop>
-          <StyledBoldBig>22:30</StyledBoldBig>
+          <StyledBoldBig>{moment(bounds[0].destination.dateTime).format("h:mm")}</StyledBoldBig>
         </HourBoxRightTop>
         <DayBoxRightTop>
-          <StyledFontMedium>{moment(bounds[0].departure.dateTime).locale("nl").format("dd DD MMM")}</StyledFontMedium>
+          <StyledFontMedium>{moment(bounds[0].destination.dateTime).locale("nl").format("dd DD MMM")}</StyledFontMedium>
         </DayBoxRightTop>
 
         <DetailsBox>
@@ -177,10 +158,10 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): J
               <StyledFontMedium>{bounds[1].destination.code}</StyledFontMedium>{" "}
             </FromBoxRightBottom>
             <HourBoxRightBottom>
-              <StyledBoldBig>22:30</StyledBoldBig>
+              <StyledBoldBig>{moment(bounds[1].destination.dateTime).locale("nl").format("h:mm")}</StyledBoldBig>
             </HourBoxRightBottom>
             <DayBoxRightBottom>
-              <StyledFontMedium>vri 04 feb</StyledFontMedium>
+              <StyledFontMedium>{moment(bounds[1].departure.dateTime).locale("nl").format("dd DD MMM")}</StyledFontMedium>
             </DayBoxRightBottom>
           </>
         )}

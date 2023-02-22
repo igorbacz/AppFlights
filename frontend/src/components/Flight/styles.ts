@@ -611,21 +611,20 @@ export const DurationBottomBox = styled.div`
 `;
 
 export const DetailsContainer = styled.div`
-  padding: 20px;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  // height: 150px;
+  padding: 20px 0px 20px 0px;
   gap: 10px;
   @media ${device.desktop} {
-    width: 550px;
+    width: 508px;
   }
   @media ${device.tablet} {
-    width: 450px;
+    width: 346px;
   }
   @media ${device.mobile} {
-    width: 280px;
+    width: 335px;
   }
 `;
 
