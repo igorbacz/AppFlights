@@ -7,10 +7,10 @@ type Props = {
   closeDetails: Dispatch<SetStateAction<boolean>>;
 };
 
-export const TableDetails = ({ currentFlightDetails, closeDetails }: Props) => {
-  const [show, setShow] = useState(false);
+export const TableDetails = ({ currentFlightDetails, closeDetails }: Props): JSX.Element => {
+  const [show, setShow] = useState<boolean>(false);
 
-  const showModal = () => {
+  const showModal = (): void => {
     setShow(true);
   };
   return (

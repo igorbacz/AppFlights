@@ -6,7 +6,7 @@ const FlightsContext = createContext({});
 const FlightsProvider = ({ children }: { children: React.ReactNode }) => {
   const [data, setData] = useState<FlightInterface[]>([]);
   const [sortedData, setSortedData] = useState<FlightInterface[]>([]);
-  const [sortSelect, setSortSelect] = useState("price");
+  const [sortSelect, setSortSelect] = useState<string>("price");
 
   const getFlights = async (): Promise<FlightInterface> => {
     const response = await fetch("http://localhost:3001/flights", {

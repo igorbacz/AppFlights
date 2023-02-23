@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Details, FlightInterface } from "../../types/types";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
-import { useHistory } from "react-router-dom";
+import { RouterChildContext, useHistory } from "react-router-dom";
 import {
   FlightContainer,
   LogoBoxTop,
@@ -46,13 +46,13 @@ import { DateTime, Duration } from "luxon";
 
 export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): JSX.Element => {
   const [currentFlightDetails, setCurrentFlightDetails] = useState<Details>();
-  const [openDetails, setOpenDetails] = useState(false);
-  let history = useHistory();
-
-  //should be
-  //          (date:string|Date|DateTime)
+  const [openDetails, setOpenDetails] = useState<boolean>(false);
+  let history: RouterChildContext["router"]["history"] = useHistory();
+  //TODO
+  // in line 55 and 60 should be
+  //                   (date:string|Date|DateTime)
   //                                       but it doesn't work
-  const formatHour = (date: any) => {
+  const formatHour = (date: any): string => {
     const luxonDate = DateTime.fromISO(date);
     return luxonDate.toLocaleString(DateTime.TIME_24_SIMPLE);
   };
@@ -66,7 +66,7 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): J
     }).format(jsDate);
   };
 
-  const calculateDestinationHour = (departureTime: any, duration: string) => {
+  const calculateDestinationHour = (departureTime: Date, duration: string): string => {
     const durationObject = Duration.fromISO(duration).shiftTo("hours", "minutes", "seconds").toObject();
     const jsDate = new Date(departureTime);
     let destinationTime = DateTime.fromJSDate(jsDate).plus({ hours: durationObject.hours, minutes: durationObject.minutes });
@@ -74,7 +74,7 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): J
     return hour;
   };
 
-  const bookFlight = async () => {
+  const bookFlight = async (): Promise<void> => {
     const response = await fetch(`http://localhost:3001/flights`, {
       method: "POST",
     });
@@ -89,7 +89,7 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): J
     bookFlight();
   };
 
-  const getFlyightDetails = async () => {
+  const getFlyightDetails = async (): Promise<FlightInterface[]> => {
     const response = await fetch(`http://localhost:3001/flights/${uuid}`, {
       method: "GET",
       headers: {
@@ -104,7 +104,7 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): J
     return data;
   };
 
-  const handleCheckDetails = () => {
+  const handleCheckDetails = (): void => {
     getFlyightDetails();
     setOpenDetails(true);
   };
@@ -127,7 +127,7 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): J
         </DayBoxLeftTop>
 
         <DurationTopBox>
-          <StyledFontMedium>{formatDuration(bounds[0].duration)}</StyledFontMedium>
+          d<StyledFontMedium>{formatDuration(bounds[0].duration)}</StyledFontMedium>
         </DurationTopBox>
 
         <LineBoxTop>

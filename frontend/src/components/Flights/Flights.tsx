@@ -5,7 +5,7 @@ import { Flight } from "../Flight/Flight";
 import { SearchBar } from "../SearchBar/SearchBar";
 import { StyledUl, ViewContainer } from "./styles";
 
-const Flights = () => {
+const Flights = (): JSX.Element => {
   const appContext: {
     sortedData?: FlightInterface[];
   } = useContext(FlightsContext);

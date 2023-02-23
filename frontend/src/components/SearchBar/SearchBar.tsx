@@ -6,18 +6,17 @@ import { FlightsContext } from "../../context/ContextProvider";
 import { StyledFontMedium } from "../Flight/styles";
 import { SelectContainer, StyledNav, StyledNavElement, StyledNavLogo, StyledSelect } from "./styles";
 
-export const SearchBar = () => {
+export const SearchBar = (): JSX.Element => {
   const appContext: {
     setSortSelect?: React.Dispatch<React.SetStateAction<string>>;
   } = useContext(FlightsContext);
-
   const { setSortSelect } = appContext;
-  const handleSortSelect = (event: ChangeEvent<HTMLSelectElement>) => {
+
+  const handleSortSelect = (event: ChangeEvent<HTMLSelectElement>): void => {
     const target = event.target as HTMLSelectElement;
     setSortSelect(target.value);
   };
 
-  console.log();
   return (
     <StyledNav>
       <StyledNavLogo>

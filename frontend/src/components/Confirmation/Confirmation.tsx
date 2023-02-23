@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { ButtonBox, StyledButton, StyledFontLight } from "../Flight/styles";
 import { ConfirmationBox, ConfirmPageContainer, ConfirmTextBox } from "./style";
 
-export const Confirmation = () => {
+export const Confirmation = (): JSX.Element => {
   return (
     <ConfirmPageContainer>
       <ConfirmationBox>
