@@ -1,34 +1,34 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Details, FlightInterface } from "../../types/types";
+import { Details, FlightTypes } from "../../types/types";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
 import { RouterChildContext, useHistory } from "react-router-dom";
 import {
   FlightContainer,
   LogoBoxTop,
   StyledLogo,
-  FromBoxLeftTop,
+  BoundDeparture0,
   StyledFontMedium,
-  HourBoxLeftTop,
+  BoundDeparture0Hour,
   StyledBoldBig,
-  DayBoxLeftTop,
+  BoundDeparture0Day,
   DurationTopBox,
   LineBoxTop,
   Line,
-  FromBoxRightTop,
-  HourBoxRightTop,
-  DayBoxRightTop,
+  BoundDestination0,
+  BoundDestination0Hour,
+  BoundDestination0Day,
   DetailsBox,
   StyledFontSmall,
   BorderBox,
   LogoBoxBottom,
-  FromBoxLeftBottom,
-  HourBoxLeftBottom,
-  DayBoxLeftBottom,
+  BoundDeparture1,
+  BoundDeparture1Hour,
+  BoundDeparture1Day,
   DurationBottomBox,
   LineBoxBottom,
-  FromBoxRightBottom,
-  HourBoxRightBottom,
-  DayBoxRightBottom,
+  BoundDestination1,
+  BoundDestination1Hour,
+  BoundDestination1Day,
   PriceContainer,
   TriangleBox,
   Triangle,
@@ -43,12 +43,13 @@ import { formatDuration } from "../../utils/duration";
 import { useState } from "react";
 import { TableDetails } from "./TableDetails";
 import { DateTime, Duration } from "luxon";
+import { theme } from "../../theme";
 
-export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): JSX.Element => {
+export const Flight = ({ uuid, airlineCode, price, bounds }: FlightTypes): JSX.Element => {
   const [currentFlightDetails, setCurrentFlightDetails] = useState<Details>();
   const [openDetails, setOpenDetails] = useState<boolean>(false);
   let history: RouterChildContext["router"]["history"] = useHistory();
-  //TODO
+
   // in line 55 and 60 should be
   //                   (date:string|Date|DateTime)
   //                                       but it doesn't work
@@ -80,7 +81,7 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): J
     });
     if (!response.ok) {
       throw new Error("Could not booked this fliht");
-    } else if (response.status == 200) {
+    } else if (response.status === 200) {
       history.push(`/confirmation`);
     }
   };
@@ -89,7 +90,7 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): J
     bookFlight();
   };
 
-  const getFlyightDetails = async (): Promise<FlightInterface[]> => {
+  const getFlyightDetails = async (): Promise<FlightTypes[]> => {
     const response = await fetch(`http://localhost:3001/flights/${uuid}`, {
       method: "GET",
       headers: {
@@ -116,35 +117,35 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): J
           <StyledLogo src={`https://d1ufw0nild2mi8.cloudfront.net/images/airlines/V2/srp/result_desktop/${airlineCode}.png`} />
         </LogoBoxTop>
 
-        <FromBoxLeftTop>
+        <BoundDeparture0>
           <StyledFontMedium>{bounds[0].departure.code}</StyledFontMedium>
-        </FromBoxLeftTop>
-        <HourBoxLeftTop>
+        </BoundDeparture0>
+        <BoundDeparture0Hour>
           <StyledBoldBig>{formatHour(bounds[0].departure.dateTime)}</StyledBoldBig>
-        </HourBoxLeftTop>
-        <DayBoxLeftTop>
+        </BoundDeparture0Hour>
+        <BoundDeparture0Day>
           <StyledFontMedium>{formatDay(bounds[0].departure.dateTime)}</StyledFontMedium>
-        </DayBoxLeftTop>
+        </BoundDeparture0Day>
 
         <DurationTopBox>
-          d<StyledFontMedium>{formatDuration(bounds[0].duration)}</StyledFontMedium>
+          <StyledFontMedium>{formatDuration(bounds[0].duration)}</StyledFontMedium>
         </DurationTopBox>
 
         <LineBoxTop>
-          <FontAwesomeIcon icon={faCircle} color="#FCC002" />
+          <FontAwesomeIcon icon={faCircle} color={theme.palette.primary.main} />
           <Line></Line>
-          <FontAwesomeIcon icon={faCircle} color="#FCC002" />
+          <FontAwesomeIcon icon={faCircle} color={theme.palette.primary.main} />
         </LineBoxTop>
 
-        <FromBoxRightTop>
+        <BoundDestination0>
           <StyledFontMedium>{bounds[0].destination.code}</StyledFontMedium>
-        </FromBoxRightTop>
-        <HourBoxRightTop>
+        </BoundDestination0>
+        <BoundDestination0Hour>
           <StyledBoldBig>{calculateDestinationHour(bounds[0].departure.dateTime, bounds[0].duration)}</StyledBoldBig>
-        </HourBoxRightTop>
-        <DayBoxRightTop>
+        </BoundDestination0Hour>
+        <BoundDestination0Day>
           <StyledFontMedium>{formatDay(bounds[0].destination.dateTime)}</StyledFontMedium>
-        </DayBoxRightTop>
+        </BoundDestination0Day>
 
         <DetailsBox>
           <StyledFontSmall onClick={handleCheckDetails}>Vluchtdetails</StyledFontSmall>
@@ -157,34 +158,34 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): J
               <StyledLogo src={`https://d1ufw0nild2mi8.cloudfront.net/images/airlines/V2/srp/result_desktop/${airlineCode}.png`} />
             </LogoBoxBottom>
 
-            <FromBoxLeftBottom>
+            <BoundDeparture1>
               <StyledFontMedium> {bounds[1].departure.code} </StyledFontMedium>
-            </FromBoxLeftBottom>
-            <HourBoxLeftBottom>
+            </BoundDeparture1>
+            <BoundDeparture1Hour>
               <StyledBoldBig>{formatHour(bounds[1].departure.dateTime)}</StyledBoldBig>
-            </HourBoxLeftBottom>
-            <DayBoxLeftBottom>
+            </BoundDeparture1Hour>
+            <BoundDeparture1Day>
               <StyledFontMedium>{formatDay(bounds[1].departure.dateTime)}</StyledFontMedium>
-            </DayBoxLeftBottom>
+            </BoundDeparture1Day>
 
             <DurationBottomBox>
               <StyledFontMedium>{formatDuration(bounds[1].duration)}</StyledFontMedium>
             </DurationBottomBox>
 
             <LineBoxBottom>
-              <FontAwesomeIcon icon={faCircle} color="#FCC002" />
+              <FontAwesomeIcon icon={faCircle} color={theme.palette.primary.main} />
               <Line></Line>
-              <FontAwesomeIcon icon={faCircle} color="#FCC002" />
+              <FontAwesomeIcon icon={faCircle} color={theme.palette.primary.main} />
             </LineBoxBottom>
-            <FromBoxRightBottom>
+            <BoundDestination1>
               <StyledFontMedium>{bounds[1].destination.code}</StyledFontMedium>{" "}
-            </FromBoxRightBottom>
-            <HourBoxRightBottom>
+            </BoundDestination1>
+            <BoundDestination1Hour>
               <StyledBoldBig>{calculateDestinationHour(bounds[1].departure.dateTime, bounds[1].duration)}</StyledBoldBig>
-            </HourBoxRightBottom>
-            <DayBoxRightBottom>
+            </BoundDestination1Hour>
+            <BoundDestination1Day>
               <StyledFontMedium>{formatDay(bounds[1].destination.dateTime)}</StyledFontMedium>
-            </DayBoxRightBottom>
+            </BoundDestination1Day>
           </>
         )}
 

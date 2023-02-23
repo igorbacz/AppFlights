@@ -4,13 +4,17 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { FlightsProvider } from "./context/ContextProvider";
+import { ThemeProvider } from "@mui/system";
+import { theme } from "./theme";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <FlightsProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ThemeProvider>
   </FlightsProvider>
 );
 

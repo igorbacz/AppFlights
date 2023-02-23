@@ -1,5 +1,5 @@
 
-export interface FlightInterface {
+export interface FlightTypes {
   uuid: string;
   airlineCode: string;
   price: Price;

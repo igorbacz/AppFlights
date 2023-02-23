@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
 import { ChangeEvent } from "react";
 import { FlightsContext } from "../../context/ContextProvider";
+import { theme } from "../../theme";
 import { StyledFontMedium } from "../Flight/styles";
 import { SelectContainer, StyledNav, StyledNavElement, StyledNavLogo, StyledSelect } from "./styles";
 
@@ -20,7 +21,7 @@ export const SearchBar = (): JSX.Element => {
   return (
     <StyledNav>
       <StyledNavLogo>
-        <FontAwesomeIcon icon={faPlaneDeparture} size="2x" color="#FCC002" />
+        <FontAwesomeIcon icon={faPlaneDeparture} size="2x" color={theme.palette.primary.main} />
       </StyledNavLogo>
       <StyledNavElement>
         <StyledFontMedium>Sort by :</StyledFontMedium>

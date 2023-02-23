@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { device } from "../../utils/breakpoints";
+import { theme } from "../../theme";
+import { device } from "../../constant/breakpoints";
 
 export const ConfirmPageContainer = styled.div`
   padding-top: 20vw;
@@ -14,12 +15,13 @@ export const ConfirmPageContainer = styled.div`
   }
   @media ${device.mobile} {
     display: flex;
+    justify-content: center;
   }
 `;
 export const ConfirmationBox = styled.div`
   width: 350px;
   height: 200px;
-  background: #ffffff 0% 0% no-repeat padding-box;
+  background: ${theme.palette.success.main} 0% 0% no-repeat padding-box;
   padding: 50px;
 
   gap: 20px;

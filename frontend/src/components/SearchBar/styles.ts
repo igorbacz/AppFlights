@@ -1,12 +1,13 @@
 import styled from "styled-components";
-import { device } from "../../utils/breakpoints";
+import { theme } from "../../theme";
+import { device } from "../../constant/breakpoints";
 
 export const StyledNav = styled.nav`
-  background-color: white;
+  background-color: ${theme.palette.success.main};
   width: 100%;
   height: 100px;
   padding: 20px;
-  border-bottom: 1px #fcc002 solid;
+  border-bottom: 1px ${theme.palette.primary.main} solid;
   display: grid;
   grid-template-columns: 2fr 3fr 6fr;
   grid-template-rows: 1fr;
@@ -32,9 +33,10 @@ export const StyledNav = styled.nav`
 
 export const StyledSelect = styled.select`
   border-radius: 24px;
-  border: 2px #008eff;
+  cursor: pointer;
+  border: 2px ${theme.palette.secondary.main};
   padding-left: 26px;
-  background: #008eff 0% 0% no-repeat padding-box;
+  background: ${theme.palette.secondary.main} 0% 0% no-repeat padding-box;
   color: #ffffff;
   font-size: 14px;
   font-weight: bold;

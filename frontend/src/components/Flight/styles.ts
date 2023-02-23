@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import { device } from "../../utils/breakpoints";
+import { theme } from "../../theme";
+import { device } from "../../constant/breakpoints";
 
 export const FlightContainer = styled.div`
-  background: #ffffff 0% 0% no-repeat padding-box;
+  background: ${theme.palette.success.main} 0% 0% no-repeat padding-box;
   opacity: 1;
   top: 20px;
   left: 20px;
@@ -31,7 +32,7 @@ export const FlightContainer = styled.div`
   }
 `;
 export const PriceContainer = styled.div`
-  background-color: #fcc002;
+  background-color: ${theme.palette.primary.main};
 
   @media ${device.desktop} {
     grid-column: 6/7;
@@ -46,7 +47,7 @@ export const PriceContainer = styled.div`
   }
 `;
 export const PriceBox = styled.div`
-  background-color: #fcc002;
+  background-color: ${theme.palette.primary.main};
   z-index: 3;
   @media ${device.desktop} {
     grid-column: 6/7;
@@ -86,7 +87,7 @@ export const PriceText = styled.div`
 `;
 
 export const StyledButton = styled.button`
-  background: #008eff 0% 0% no-repeat padding-box;
+  background: ${theme.palette.secondary.main} 0% 0% no-repeat padding-box;
   border-radius: 24px;
   opacity: 1;
   text-align: center;
@@ -99,9 +100,9 @@ export const StyledButton = styled.button`
   z-index:2;
 font-weight: bold;
   &:hover {
-    background: white;
-    color: #008eff;
-    border: solid 3px #008eff;
+    background: ${theme.palette.success.main};
+    color: ${theme.palette.secondary.main};
+    border: solid 3px ${theme.palette.secondary.main};
   }
   @media ${device.mobile} {
     width: 140px;
@@ -204,7 +205,7 @@ export const LogoBoxTop = styled.div`
   }
 `;
 
-export const FromBoxLeftTop = styled.div`
+export const BoundDeparture0 = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
@@ -223,7 +224,7 @@ export const FromBoxLeftTop = styled.div`
     grid-row: 1/2;
   }
 `;
-export const HourBoxLeftTop = styled.div`
+export const BoundDeparture0Hour = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -240,7 +241,7 @@ export const HourBoxLeftTop = styled.div`
     grid-row: 2/3;
   }
 `;
-export const DayBoxLeftTop = styled.div`
+export const BoundDeparture0Day = styled.div`
   display: flex;
   justify-content: flex-end;
   @media ${device.mobile} {
@@ -257,7 +258,7 @@ export const DayBoxLeftTop = styled.div`
   }
 `;
 
-export const FromBoxRightTop = styled.div`
+export const BoundDestination0 = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
@@ -274,7 +275,7 @@ export const FromBoxRightTop = styled.div`
     grid-row: 1/2;
   }
 `;
-export const HourBoxRightTop = styled.div`
+export const BoundDestination0Hour = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -291,7 +292,7 @@ export const HourBoxRightTop = styled.div`
     grid-row: 2/3;
   }
 `;
-export const DayBoxRightTop = styled.div`
+export const BoundDestination0Day = styled.div`
   display: flex;
   justify-content: flex-start;
   @media ${device.mobile} {
@@ -308,7 +309,7 @@ export const DayBoxRightTop = styled.div`
   }
 `;
 
-export const FromBoxLeftBottom = styled.div`
+export const BoundDeparture1 = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
@@ -325,7 +326,7 @@ export const FromBoxLeftBottom = styled.div`
     grid-row: 4/5;
   }
 `;
-export const HourBoxLeftBottom = styled.div`
+export const BoundDeparture1Hour = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -342,7 +343,7 @@ export const HourBoxLeftBottom = styled.div`
     grid-row: 5/6;
   }
 `;
-export const DayBoxLeftBottom = styled.div`
+export const BoundDeparture1Day = styled.div`
   display: flex;
   justify-content: flex-end;
   @media ${device.mobile} {
@@ -359,7 +360,7 @@ export const DayBoxLeftBottom = styled.div`
   }
 `;
 
-export const FromBoxRightBottom = styled.div`
+export const BoundDestination1 = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
@@ -375,7 +376,7 @@ export const FromBoxRightBottom = styled.div`
     grid-column: 4/5;
     grid-row: 4/5;
 `;
-export const HourBoxRightBottom = styled.div`
+export const BoundDestination1Hour = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -393,7 +394,7 @@ export const HourBoxRightBottom = styled.div`
   }
 `;
 
-export const DayBoxRightBottom = styled.div`
+export const BoundDestination1Day = styled.div`
   display: flex;
   justify-content: flex-start;
   @media ${device.mobile} {
@@ -451,7 +452,7 @@ export const LineBoxTop = styled.div`
 `;
 
 export const Line = styled.hr`
-  border: 1px solid #fcc002;
+  border: 1px solid ${theme.palette.primary.main};
   width: 80%;
 `;
 
@@ -528,7 +529,7 @@ export const Triangle = styled.div`
   width: 26px;
   height: 26px;
   transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
-  background: #fcc002 0% 0% no-repeat padding-box;
+  background: ${theme.palette.primary.main} 0% 0% no-repeat padding-box;
 `;
 
 export const StyledFontSmall = styled.p`
@@ -611,7 +612,7 @@ export const DurationBottomBox = styled.div`
 `;
 
 export const DetailsContainer = styled.div`
-  background-color: white;
+  background-color: ${theme.palette.success.main};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -640,12 +641,12 @@ export const StyledTd = styled.td`
 
 export const StyledCloseButton = styled.button`
   border-radius: 90px;
-  background-color: #fcc002;
+  background-color: ${theme.palette.primary.main};
   width: 50%;
   cursor: pointer;
-  border: solid 2px #fcc002;
+  border: solid 2px ${theme.palette.primary.main};
   &:hover {
-    border: solid 2px #fcc002;
-    background-color: white;
+    border: solid 2px ${theme.palette.primary.main};
+    background-color: ${theme.palette.success.main};
   }
 `;

@@ -1,14 +1,14 @@
 import React, { createContext, useEffect, useState } from "react";
-import { FlightInterface } from "../types/types";
+import { FlightTypes } from "../types/types";
 
 const FlightsContext = createContext({});
 
 const FlightsProvider = ({ children }: { children: React.ReactNode }) => {
-  const [data, setData] = useState<FlightInterface[]>([]);
-  const [sortedData, setSortedData] = useState<FlightInterface[]>([]);
+  const [data, setData] = useState<FlightTypes[]>([]);
+  const [sortedData, setSortedData] = useState<FlightTypes[]>([]);
   const [sortSelect, setSortSelect] = useState<string>("price");
 
-  const getFlights = async (): Promise<FlightInterface> => {
+  const getFlights = async (): Promise<FlightTypes> => {
     const response = await fetch("http://localhost:3001/flights", {
       method: "GET",
       headers: {
@@ -45,7 +45,7 @@ const FlightsProvider = ({ children }: { children: React.ReactNode }) => {
         const y: number = new Date(a.bounds[0]?.departure.dateTime).valueOf();
         return y - x;
       });
-      setSortedData([...sortedFlights]);    
+      setSortedData([...sortedFlights]);
     }
   };
   return (
@@ -54,8 +54,6 @@ const FlightsProvider = ({ children }: { children: React.ReactNode }) => {
         sortSelect,
         setSortSelect,
         sortedData,
-        setSortedData,
-        sortedHandler,
       }}
     >
       {children}

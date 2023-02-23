@@ -1,3 +1,5 @@
+### Solution by Iwona Gorbacz
+
 ### Installation
 1. Install dependencies in both `/backend` and `/frontend` (`npm install`)
 2. Run `npm start` command in both `/backend` and `/frontend` directories

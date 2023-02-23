@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Details } from "../../types/types";
 import { StyledCloseButton, StyledTable, StyledTd } from "./styles";
 
@@ -8,11 +8,6 @@ type Props = {
 };
 
 export const TableDetails = ({ currentFlightDetails, closeDetails }: Props): JSX.Element => {
-  const [show, setShow] = useState<boolean>(false);
-
-  const showModal = (): void => {
-    setShow(true);
-  };
   return (
     <>
       <StyledCloseButton onClick={() => closeDetails(false)}>close details</StyledCloseButton>

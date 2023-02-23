@@ -13,3 +13,6 @@ export const StyledUl = styled.ul`
   flex-direction: column;
 `;
 
+export const PaginationContainer = styled.div`
+  padding-bottom: 20px;
+`;
