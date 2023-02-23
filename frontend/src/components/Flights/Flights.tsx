@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useContext, useEffect } from "react";
+import { useContext } from "react";
 import { FlightsContext } from "../../context/ContextProvider";
 import { FlightInterface } from "../../types/types";
 import { Flight } from "../Flight/Flight";
@@ -8,17 +8,8 @@ import { StyledUl, ViewContainer } from "./styles";
 const Flights = () => {
   const appContext: {
     sortedData?: FlightInterface[];
-    sortSelect?: string;
-    setSortedData?: Dispatch<SetStateAction<FlightInterface[]>>;
   } = useContext(FlightsContext);
-
-  const { sortedData, sortSelect, setSortedData } = appContext;
-
-  useEffect(() => {
-    setSortedData([...sortedData]);
-    console.log(sortSelect);
-  }, []);
-
+  const { sortedData } = appContext;
   return (
     <ViewContainer>
       <SearchBar />

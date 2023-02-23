@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Details, flight, FlightInterface } from "../../types/types";
+import { Details, FlightInterface } from "../../types/types";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
 import { useHistory } from "react-router-dom";
 import {
@@ -39,17 +39,40 @@ import {
   StyledButton,
   DetailsContainer,
 } from "./styles";
-import moment from "moment";
 import { formatDuration } from "../../utils/duration";
 import { useState } from "react";
 import { TableDetails } from "./TableDetails";
-
-moment.locale("nl");
+import { DateTime, Duration } from "luxon";
 
 export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): JSX.Element => {
   const [currentFlightDetails, setCurrentFlightDetails] = useState<Details>();
   const [openDetails, setOpenDetails] = useState(false);
   let history = useHistory();
+
+  //should be
+  //          (date:string|Date|DateTime)
+  //                                       but it doesn't work
+  const formatHour = (date: any) => {
+    const luxonDate = DateTime.fromISO(date);
+    return luxonDate.toLocaleString(DateTime.TIME_24_SIMPLE);
+  };
+
+  const formatDay = (date: any): string => {
+    const jsDate = new Date(date);
+    return new Intl.DateTimeFormat("nl-NL", {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+    }).format(jsDate);
+  };
+
+  const calculateDestinationHour = (departureTime: any, duration: string) => {
+    const durationObject = Duration.fromISO(duration).shiftTo("hours", "minutes", "seconds").toObject();
+    const jsDate = new Date(departureTime);
+    let destinationTime = DateTime.fromJSDate(jsDate).plus({ hours: durationObject.hours, minutes: durationObject.minutes });
+    const hour = formatHour(destinationTime);
+    return hour;
+  };
 
   const bookFlight = async () => {
     const response = await fetch(`http://localhost:3001/flights`, {
@@ -97,10 +120,10 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): J
           <StyledFontMedium>{bounds[0].departure.code}</StyledFontMedium>
         </FromBoxLeftTop>
         <HourBoxLeftTop>
-          <StyledBoldBig>{moment(bounds[0].departure.dateTime).format("h:mm")}</StyledBoldBig>
+          <StyledBoldBig>{formatHour(bounds[0].departure.dateTime)}</StyledBoldBig>
         </HourBoxLeftTop>
         <DayBoxLeftTop>
-          <StyledFontMedium>{moment(bounds[0].departure.dateTime).locale("nl").format("dd DD MMM")}</StyledFontMedium>
+          <StyledFontMedium>{formatDay(bounds[0].departure.dateTime)}</StyledFontMedium>
         </DayBoxLeftTop>
 
         <DurationTopBox>
@@ -117,10 +140,10 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): J
           <StyledFontMedium>{bounds[0].destination.code}</StyledFontMedium>
         </FromBoxRightTop>
         <HourBoxRightTop>
-          <StyledBoldBig>{moment(bounds[0].destination.dateTime).format("h:mm")}</StyledBoldBig>
+          <StyledBoldBig>{calculateDestinationHour(bounds[0].departure.dateTime, bounds[0].duration)}</StyledBoldBig>
         </HourBoxRightTop>
         <DayBoxRightTop>
-          <StyledFontMedium>{moment(bounds[0].destination.dateTime).locale("nl").format("dd DD MMM")}</StyledFontMedium>
+          <StyledFontMedium>{formatDay(bounds[0].destination.dateTime)}</StyledFontMedium>
         </DayBoxRightTop>
 
         <DetailsBox>
@@ -128,20 +151,20 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): J
         </DetailsBox>
 
         <BorderBox />
-        {!bounds[1] ? null : (
+        {bounds[1] && (
           <>
             <LogoBoxBottom>
-              <StyledLogo src={`https://d1ufw0nild2mi8.cloudfront.net/images/airlines/V2/srp/result_desktop/${flight.airlineCode}.png`} />
+              <StyledLogo src={`https://d1ufw0nild2mi8.cloudfront.net/images/airlines/V2/srp/result_desktop/${airlineCode}.png`} />
             </LogoBoxBottom>
 
             <FromBoxLeftBottom>
               <StyledFontMedium> {bounds[1].departure.code} </StyledFontMedium>
             </FromBoxLeftBottom>
             <HourBoxLeftBottom>
-              <StyledBoldBig>{moment(bounds[1].departure.dateTime).format("h:mm")}</StyledBoldBig>
+              <StyledBoldBig>{formatHour(bounds[1].departure.dateTime)}</StyledBoldBig>
             </HourBoxLeftBottom>
             <DayBoxLeftBottom>
-              <StyledFontMedium>{moment(bounds[1].departure.dateTime).locale("nl").format("dd DD MMM")}</StyledFontMedium>
+              <StyledFontMedium>{formatDay(bounds[1].departure.dateTime)}</StyledFontMedium>
             </DayBoxLeftBottom>
 
             <DurationBottomBox>
@@ -153,15 +176,14 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightInterface): J
               <Line></Line>
               <FontAwesomeIcon icon={faCircle} color="#FCC002" />
             </LineBoxBottom>
-
             <FromBoxRightBottom>
               <StyledFontMedium>{bounds[1].destination.code}</StyledFontMedium>{" "}
             </FromBoxRightBottom>
             <HourBoxRightBottom>
-              <StyledBoldBig>{moment(bounds[1].destination.dateTime).locale("nl").format("h:mm")}</StyledBoldBig>
+              <StyledBoldBig>{calculateDestinationHour(bounds[1].departure.dateTime, bounds[1].duration)}</StyledBoldBig>
             </HourBoxRightBottom>
             <DayBoxRightBottom>
-              <StyledFontMedium>{moment(bounds[1].departure.dateTime).locale("nl").format("dd DD MMM")}</StyledFontMedium>
+              <StyledFontMedium>{formatDay(bounds[1].destination.dateTime)}</StyledFontMedium>
             </DayBoxRightBottom>
           </>
         )}

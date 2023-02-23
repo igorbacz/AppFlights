@@ -173,7 +173,7 @@ export const StyledLogo = styled.img`
     height: 49px;
   }
 `;
-//DONE
+
 export const ButtonBox = styled.div`
   padding-bottom: 6px;
 `;
@@ -197,7 +197,7 @@ export const LogoBoxTop = styled.div`
   }
   @media ${device.desktop} {
     grid-column: 1/2;
-    grid-row: 1/2;
+    grid-row: 2/3;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -474,7 +474,7 @@ export const LogoBoxBottom = styled.div`
   }
   @media ${device.desktop} {
     grid-column: 1/2;
-    grid-row: 4/5;
+    grid-row: 5/6;
     display: flex;
     justify-content: center;
     align-items: center;
