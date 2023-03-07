@@ -2,6 +2,7 @@ import { faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { theme } from "../../theme";
+import { Paths } from "../../types/types";
 import { ButtonBox, StyledButton, StyledFontLight } from "../Flight/styles";
 import { ConfirmationBox, ConfirmPageContainer, ConfirmTextBox } from "./style";
 
@@ -14,7 +15,7 @@ export const Confirmation = (): JSX.Element => {
           <StyledFontLight>Congratulations! Your flight booking is confirmed.</StyledFontLight>
         </ConfirmTextBox>
         <ButtonBox>
-          <Link to="/flights">
+          <Link to={Paths.Flights}>
             <StyledButton>Flyithts list</StyledButton>
           </Link>
         </ButtonBox>

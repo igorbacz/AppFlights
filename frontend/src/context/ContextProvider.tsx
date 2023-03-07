@@ -1,15 +1,17 @@
 import React, { createContext, useEffect, useState } from "react";
-import { FlightTypes } from "../types/types";
+import { apiUrl } from "../constant/apiUrl";
+import { FlightTypes, Paths } from "../types/types";
 
 const FlightsContext = createContext({});
 
 const FlightsProvider = ({ children }: { children: React.ReactNode }) => {
+  const SELECT_BY_PRICE = "price";
   const [data, setData] = useState<FlightTypes[]>([]);
   const [sortedData, setSortedData] = useState<FlightTypes[]>([]);
   const [sortSelect, setSortSelect] = useState<string>("price");
 
   const getFlights = async (): Promise<FlightTypes> => {
-    const response = await fetch("http://localhost:3001/flights", {
+    const response = await fetch(`${apiUrl}${Paths.Flights}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -31,23 +33,27 @@ const FlightsProvider = ({ children }: { children: React.ReactNode }) => {
     sortedHandler();
   }, [sortSelect, data]);
 
-  const sortedHandler = (): void => {
-    if (sortSelect === "price") {
-      let sortedFlights = data.sort((a, b) => {
-        const x = a.price.amount;
-        const y = b.price.amount;
-        return x - y;
-      });
-      setSortedData([...sortedFlights]);
-    } else if (sortSelect === "time") {
-      let sortedFlights = data.sort((a, b) => {
-        const x: number = new Date(b.bounds[0]?.departure.dateTime).valueOf();
-        const y: number = new Date(a.bounds[0]?.departure.dateTime).valueOf();
-        return y - x;
-      });
-      setSortedData([...sortedFlights]);
-    }
+  const priceSort = () => {
+    let sortedFlights = data.sort((a, b) => {
+      const x = a.price.amount;
+      const y = b.price.amount;
+      return x - y;
+    });
+    setSortedData([...sortedFlights]);
   };
+  const timeSort = () => {
+    let sortedFlights = data.sort((a, b) => {
+      const x: number = new Date(b.bounds[0]?.departure.dateTime).valueOf();
+      const y: number = new Date(a.bounds[0]?.departure.dateTime).valueOf();
+      return y - x;
+    });
+    setSortedData([...sortedFlights]);
+  };
+
+  const sortedHandler = (): void => {
+    sortSelect === SELECT_BY_PRICE ? priceSort() : timeSort();
+  };
+
   return (
     <FlightsContext.Provider
       value={{

@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Details, FlightTypes } from "../../types/types";
+import { Details, FlightTypes, Paths } from "../../types/types";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
 import { RouterChildContext, useHistory } from "react-router-dom";
 import {
@@ -44,6 +44,7 @@ import { useState } from "react";
 import { TableDetails } from "./TableDetails";
 import { DateTime, Duration } from "luxon";
 import { theme } from "../../theme";
+import { apiUrl } from "../../constant/apiUrl";
 
 export const Flight = ({ uuid, airlineCode, price, bounds }: FlightTypes): JSX.Element => {
   const [currentFlightDetails, setCurrentFlightDetails] = useState<Details>();
@@ -76,13 +77,13 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightTypes): JSX.E
   };
 
   const bookFlight = async (): Promise<void> => {
-    const response = await fetch(`http://localhost:3001/flights`, {
+    const response = await fetch(`${apiUrl}${Paths.Flights}`, {
       method: "POST",
     });
     if (!response.ok) {
       throw new Error("Could not booked this fliht");
     } else if (response.status === 200) {
-      history.push(`/confirmation`);
+      history.push(`${Paths.Confirmation}`);
     }
   };
 
@@ -91,7 +92,7 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightTypes): JSX.E
   };
 
   const getFlyightDetails = async (): Promise<FlightTypes[]> => {
-    const response = await fetch(`http://localhost:3001/flights/${uuid}`, {
+    const response = await fetch(`${apiUrl}${Paths.Flights}/${uuid}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

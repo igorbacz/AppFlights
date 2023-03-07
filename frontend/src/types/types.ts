@@ -4,7 +4,6 @@ export interface FlightTypes {
   airlineCode: string;
   price: Price;
   bounds: Bound[];
-  details?: Details;
 }
 
 export interface Price {
@@ -30,4 +29,9 @@ export interface Details {
   seatPitch: number;
   freeBaggageAllowed: boolean;
   cabinClass: string;
+}
+
+export enum Paths {
+  Flights = "/flights",
+  Confirmation = "/confirmation",
 }
