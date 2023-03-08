@@ -45,10 +45,14 @@ import { TableDetails } from "./TableDetails";
 import { DateTime, Duration } from "luxon";
 import { theme } from "../../theme";
 import { apiUrl } from "../../constant/apiUrl";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export const Flight = ({ uuid, airlineCode, price, bounds }: FlightTypes): JSX.Element => {
   const [currentFlightDetails, setCurrentFlightDetails] = useState<Details>();
   const [openDetails, setOpenDetails] = useState<boolean>(false);
+  const [loadingDetails, setLoadingDetails] = useState<boolean>(false);
+  const [loadingBooking, setLoadingBooking] = useState<boolean>(false);
+
   let history: RouterChildContext["router"]["history"] = useHistory();
 
   // in line 55 and 60 should be
@@ -83,11 +87,13 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightTypes): JSX.E
     if (!response.ok) {
       throw new Error("Could not booked this fliht");
     } else if (response.status === 200) {
+      setLoadingBooking(false);
       history.push(`${Paths.Confirmation}`);
     }
   };
 
   const handleBookFlight = (): void => {
+    setLoadingBooking(true);
     bookFlight();
   };
 
@@ -102,11 +108,13 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightTypes): JSX.E
       throw new Error("Could not fetch flight details");
     }
     const data = await response.json();
+    setLoadingDetails(false);
     setCurrentFlightDetails(data);
     return data;
   };
 
   const handleCheckDetails = (): void => {
+    setLoadingDetails(true);
     getFlyightDetails();
     setOpenDetails(true);
   };
@@ -201,13 +209,13 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightTypes): JSX.E
             <StyledFontLight>p.p.</StyledFontLight>
           </PriceText>
           <ButtonBox>
-            <StyledButton onClick={handleBookFlight}>Book flight</StyledButton>
+            <StyledButton onClick={handleBookFlight}>{loadingBooking ? <CircularProgress /> : "Book flight"}</StyledButton>
           </ButtonBox>
         </PriceBox>
       </FlightContainer>
       {openDetails && (
         <DetailsContainer>
-          <TableDetails currentFlightDetails={currentFlightDetails} closeDetails={setOpenDetails} />
+          {loadingDetails ? <CircularProgress /> : <TableDetails currentFlightDetails={currentFlightDetails} closeDetails={setOpenDetails} />}
         </DetailsContainer>
       )}
     </>

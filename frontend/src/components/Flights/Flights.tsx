@@ -6,6 +6,7 @@ import { FlightTypes } from "../../types/types";
 import { Flight } from "../Flight/Flight";
 import { SearchBar } from "../SearchBar/SearchBar";
 import { PaginationContainer, StyledUl, ViewContainer } from "./styles";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Flights = (): JSX.Element => {
   const appContext: {
@@ -24,13 +25,16 @@ const Flights = (): JSX.Element => {
     <ViewContainer>
       <SearchBar />
       <StyledUl>
-        {sortedData
-          ? _DATA.currentData().map((flight: FlightTypes) => (
-              <li key={flight.uuid}>
-                <Flight uuid={flight.uuid} airlineCode={flight.airlineCode} price={flight.price} bounds={flight.bounds} />
-              </li>
-            ))
-          : null}
+        {sortedData ? (
+          _DATA.currentData().map((flight: FlightTypes) => (
+            <li key={flight.uuid}>
+              <Flight uuid={flight.uuid} airlineCode={flight.airlineCode} price={flight.price} bounds={flight.bounds} />
+            </li>
+          ))
+        ) : (
+          //TODO
+          <CircularProgress />
+        )}
       </StyledUl>
       <PaginationContainer>
         <Pagination count={count} page={page} color="secondary" variant="outlined" shape="rounded" onChange={handleChangePagination} />

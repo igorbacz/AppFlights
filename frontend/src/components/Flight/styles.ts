@@ -87,6 +87,9 @@ export const PriceText = styled.div`
 `;
 
 export const StyledButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: ${theme.palette.secondary.main} 0% 0% no-repeat padding-box;
   border-radius: 24px;
   opacity: 1;
