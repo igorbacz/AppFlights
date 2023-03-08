@@ -18,7 +18,7 @@ const FlightsProvider = ({ children }: { children: React.ReactNode }) => {
       },
     });
     if (!response.ok) {
-      throw new Error("Could not fetch flights data");
+       alert("Could not fetch flights data");
     }
     const data = await response.json();
     setData(data);

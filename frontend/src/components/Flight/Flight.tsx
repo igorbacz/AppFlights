@@ -55,9 +55,6 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightTypes): JSX.E
 
   let history: RouterChildContext["router"]["history"] = useHistory();
 
-  // in line 55 and 60 should be
-  //                   (date:string|Date|DateTime)
-  //                                       but it doesn't work
   const formatHour = (date: any): string => {
     const luxonDate = DateTime.fromISO(date);
     return luxonDate.toLocaleString(DateTime.TIME_24_SIMPLE);
@@ -84,8 +81,14 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightTypes): JSX.E
     const response = await fetch(`${apiUrl}${Paths.Flights}`, {
       method: "POST",
     });
+    // try {
+    //   setLoadingBooking(false);
+    //   history.push(`${Paths.Confirmation}`);
+    // } catch (error) {
+    //   alert("Could not booked this fliht");
+    // }
     if (!response.ok) {
-      throw new Error("Could not booked this fliht");
+      alert("Could not booked this fliht");
     } else if (response.status === 200) {
       setLoadingBooking(false);
       history.push(`${Paths.Confirmation}`);
@@ -105,7 +108,7 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightTypes): JSX.E
       },
     });
     if (!response.ok) {
-      throw new Error("Could not fetch flight details");
+      alert("Could not fetch flight details");
     }
     const data = await response.json();
     setLoadingDetails(false);
