@@ -3,7 +3,7 @@ import { theme } from "../../theme";
 import { device } from "../../constant/breakpoints";
 
 export const ConfirmPageContainer = styled.div`
-  padding-top: 20vw;
+  padding-top: 100px;
 
   @media ${device.desktop} {
     display: flex;

@@ -1,8 +1,8 @@
 import { faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import { Paths } from "../../routes/routesMap";
 import { theme } from "../../theme";
-import { Paths } from "../../types/types";
 import { ButtonBox, StyledButton, StyledFontLight } from "../Flight/styles";
 import { ConfirmationBox, ConfirmPageContainer, ConfirmTextBox } from "./style";
 
@@ -16,7 +16,7 @@ export const Confirmation = (): JSX.Element => {
         </ConfirmTextBox>
         <ButtonBox>
           <Link to={Paths.Flights}>
-            <StyledButton>Flyithts list</StyledButton>
+            <StyledButton>Flights list</StyledButton>
           </Link>
         </ButtonBox>
       </ConfirmationBox>

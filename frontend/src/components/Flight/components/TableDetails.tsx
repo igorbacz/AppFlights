@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
-import { Details } from "../../types/types";
-import { StyledCloseButton, StyledTable, StyledTd } from "./styles";
+import { Details } from "../../../types/types";
+import { StyledCloseButton, StyledTable, StyledTd } from "../styles";
 
 type Props = {
   currentFlightDetails: Details | undefined;

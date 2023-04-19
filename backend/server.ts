@@ -3,7 +3,7 @@ import express from "express";
 import fs from "fs";
 import { getRandomChanceFlag, getTimeoutInMs, mapFlight } from "./utils";
 
-const PORT = 3001;
+const PORT = 3008;
 const MIN_TIMEOUT_IN_SECONDS = 0.5;
 const MAX_TIMEOUT_IN_SECONDS = 3;
 const ERROR_CHANCE_IN_PERCENTAGE = 20;

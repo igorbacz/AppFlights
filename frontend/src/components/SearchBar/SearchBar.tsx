@@ -1,21 +1,20 @@
 import { faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { ChangeEvent } from "react";
-import { FlightsContext } from "../../context/ContextProvider";
 import { theme } from "../../theme";
 import { StyledFontMedium } from "../Flight/styles";
 import { SelectContainer, StyledNav, StyledNavElement, StyledNavLogo, StyledSelect } from "./styles";
+import { FlightsContext } from "../../context/ContextProvider";
 
 export const SearchBar = (): JSX.Element => {
-  const appContext: {
-    setSortSelect?: React.Dispatch<React.SetStateAction<string>>;
-  } = useContext(FlightsContext);
-  const { setSortSelect } = appContext;
-
+  const { dispatch } = useContext(FlightsContext);
   const handleSortSelect = (event: ChangeEvent<HTMLSelectElement>): void => {
     const target = event.target as HTMLSelectElement;
-    setSortSelect(target.value);
+    dispatch({
+      type: target.value === "price" ? "SORT_BY_PRICE" : "SORT_BY_DATE",
+      payload: [],
+    });
   };
 
   return (
