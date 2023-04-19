@@ -3,7 +3,7 @@ import { FlightTypes } from "../types/types";
 
 const usePagination = (data: FlightTypes[], itemsPerPage: number) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const maxPage = Math.ceil(data.length / itemsPerPage);
+  const maxPage = Math.ceil(data?.length / itemsPerPage);
 
   const currentData = () => {
     const begin = (currentPage - 1) * itemsPerPage;

@@ -12,8 +12,8 @@ export const FlightContainer = styled.div`
     width: 335px;
     height: 320px;
     display: grid;
-    grid-template-columns: 111.5px 111.5px 111.5px;
-    grid-template-rows: 42.5px 42.5px 42.5px 42.5px 42.5px 42.5px 64px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(6, 42px) 64px;
   }
 
   @media ${device.tablet} {
@@ -21,14 +21,14 @@ export const FlightContainer = styled.div`
     height: 236px;
     display: grid;
     grid-template-columns: 123px 100px 123px 194px;
-    grid-template-rows: 39px 39px 39px 39px 39px 39px;
+    grid-template-rows: repeat(6, 39px);
   }
   @media ${device.desktop} {
     width: 728px;
     height: 260px;
     display: grid;
     grid-template-columns: 107px 107px 107px 107px 80px 220px;
-    grid-template-rows: 43px 43px 43px 43px 43px 43px;
+    grid-template-rows: repeat(6, 43px);
   }
 `;
 export const PriceContainer = styled.div`
@@ -96,7 +96,7 @@ export const StyledButton = styled.button`
   text-align: center;
   letter-spacing: 0px;
   color: #ffffff;
-  border-width: 0px;
+  border-width: 0px; 
   padding-bottom: 10px;
   padding-top: 10px;
   cursor: pointer;
@@ -453,7 +453,6 @@ export const LineBoxTop = styled.div`
     grid-row: 2/3;
   }
 `;
-
 export const Line = styled.hr`
   border: 1px solid ${theme.palette.primary.main};
   width: 80%;

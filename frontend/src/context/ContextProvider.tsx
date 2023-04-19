@@ -1,70 +1,43 @@
-import React, { createContext, useEffect, useState } from "react";
-import { apiUrl } from "../constant/apiUrl";
-import { FlightTypes, Paths } from "../types/types";
+import React, { createContext, useCallback, useEffect, useReducer } from "react";
+import { API_URL } from "../constant/apiUrl";
+import { Paths } from "../routes/routesMap";
+import { FlightActions, FlightState } from "./types";
+import flightReducer from "./FlightReducer";
 
-const FlightsContext = createContext({});
+const initialState: FlightState = {
+  flights: null,
+};
+export const FlightsContext = createContext<{ state: FlightState; dispatch: React.Dispatch<FlightActions> }>({
+  state: initialState,
+  dispatch: () => null,
+});
+type Props = {
+  children: React.ReactNode;
+};
+export const FlightProvider: React.FC<Props> = ({ children }) => {
+  const [state, dispatch] = useReducer(flightReducer, initialState);
 
-const FlightsProvider = ({ children }: { children: React.ReactNode }) => {
-  const SELECT_BY_PRICE = "price";
-  const [data, setData] = useState<FlightTypes[]>([]);
-  const [sortedData, setSortedData] = useState<FlightTypes[]>([]);
-  const [sortSelect, setSortSelect] = useState<string>("price");
-
-  const getFlights = async (): Promise<FlightTypes> => {
-    const response = await fetch(`${apiUrl}${Paths.Flights}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) {
-       alert("Could not fetch flights data");
+  const getFlights = useCallback(async (): Promise<void> => {
+    try {
+      const response = await fetch(`${API_URL}${Paths.Flights}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        dispatch({ type: "SET_FLIGHTS", payload: data });
+        dispatch({ type: "SORT_BY_PRICE" });
+      }
+    } catch (error) {
+      alert("Could not fetch flights data");
     }
-    const data = await response.json();
-    setData(data);
-    return data;
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     getFlights();
   }, []);
 
-  useEffect(() => {
-    sortedHandler();
-  }, [sortSelect, data]);
-
-  const priceSort = () => {
-    let sortedFlights = data.sort((a, b) => {
-      const x = a.price.amount;
-      const y = b.price.amount;
-      return x - y;
-    });
-    setSortedData([...sortedFlights]);
-  };
-  const timeSort = () => {
-    let sortedFlights = data.sort((a, b) => {
-      const x: number = new Date(b.bounds[0]?.departure.dateTime).valueOf();
-      const y: number = new Date(a.bounds[0]?.departure.dateTime).valueOf();
-      return y - x;
-    });
-    setSortedData([...sortedFlights]);
-  };
-
-  const sortedHandler = (): void => {
-    sortSelect === SELECT_BY_PRICE ? priceSort() : timeSort();
-  };
-
-  return (
-    <FlightsContext.Provider
-      value={{
-        sortSelect,
-        setSortSelect,
-        sortedData,
-      }}
-    >
-      {children}
-    </FlightsContext.Provider>
-  );
+  return <FlightsContext.Provider value={{ state, dispatch }}>{children}</FlightsContext.Provider>;
 };
-
-export { FlightsContext, FlightsProvider };

@@ -1,51 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Details, FlightTypes, Paths } from "../../types/types";
+import { Details, FlightTypes } from "../../types/types";
 import { faCircle } from "@fortawesome/free-regular-svg-icons";
 import { RouterChildContext, useHistory } from "react-router-dom";
-import {
-  FlightContainer,
-  LogoBoxTop,
-  StyledLogo,
-  BoundDeparture0,
-  StyledFontMedium,
-  BoundDeparture0Hour,
-  StyledBoldBig,
-  BoundDeparture0Day,
-  DurationTopBox,
-  LineBoxTop,
-  Line,
-  BoundDestination0,
-  BoundDestination0Hour,
-  BoundDestination0Day,
-  DetailsBox,
-  StyledFontSmall,
-  BorderBox,
-  LogoBoxBottom,
-  BoundDeparture1,
-  BoundDeparture1Hour,
-  BoundDeparture1Day,
-  DurationBottomBox,
-  LineBoxBottom,
-  BoundDestination1,
-  BoundDestination1Hour,
-  BoundDestination1Day,
-  PriceContainer,
-  TriangleBox,
-  Triangle,
-  PriceBox,
-  PriceText,
-  StyledFontLight,
-  ButtonBox,
-  StyledButton,
-  DetailsContainer,
-} from "./styles";
+import * as styled from "./styles";
 import { formatDuration } from "../../utils/duration";
 import { useState } from "react";
-import { TableDetails } from "./TableDetails";
+import { TableDetails } from "./components/TableDetails";
 import { DateTime, Duration } from "luxon";
 import { theme } from "../../theme";
-import { apiUrl } from "../../constant/apiUrl";
+import { API_URL } from "../../constant/apiUrl";
 import CircularProgress from "@mui/material/CircularProgress";
+import { Paths } from "../../routes/routesMap";
+import apiClient from "../../service/api/apiClient";
 
 export const Flight = ({ uuid, airlineCode, price, bounds }: FlightTypes): JSX.Element => {
   const [currentFlightDetails, setCurrentFlightDetails] = useState<Details>();
@@ -76,22 +42,13 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightTypes): JSX.E
     const hour = formatHour(destinationTime);
     return hour;
   };
-
   const bookFlight = async (): Promise<void> => {
-    const response = await fetch(`${apiUrl}${Paths.Flights}`, {
-      method: "POST",
-    });
-    // try {
-    //   setLoadingBooking(false);
-    //   history.push(`${Paths.Confirmation}`);
-    // } catch (error) {
-    //   alert("Could not booked this fliht");
-    // }
-    if (!response.ok) {
-      alert("Could not booked this fliht");
-    } else if (response.status === 200) {
+    try {
+      const response = await apiClient.postReq(`${Paths.Flights}/${uuid}`);
       setLoadingBooking(false);
       history.push(`${Paths.Confirmation}`);
+    } catch (error) {
+      alert("Could not booked this flight");
     }
   };
 
@@ -100,8 +57,8 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightTypes): JSX.E
     bookFlight();
   };
 
-  const getFlyightDetails = async (): Promise<FlightTypes[]> => {
-    const response = await fetch(`${apiUrl}${Paths.Flights}/${uuid}`, {
+  const getFlightDetails = async (): Promise<FlightTypes[]> => {
+    const response = await fetch(`${API_URL}${Paths.Flights}/${uuid}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -118,108 +75,108 @@ export const Flight = ({ uuid, airlineCode, price, bounds }: FlightTypes): JSX.E
 
   const handleCheckDetails = (): void => {
     setLoadingDetails(true);
-    getFlyightDetails();
+    getFlightDetails();
     setOpenDetails(true);
   };
 
   return (
     <>
-      <FlightContainer>
-        <LogoBoxTop>
-          <StyledLogo src={`https://d1ufw0nild2mi8.cloudfront.net/images/airlines/V2/srp/result_desktop/${airlineCode}.png`} />
-        </LogoBoxTop>
+      <styled.FlightContainer>
+        <styled.LogoBoxTop>
+          <styled.StyledLogo src={`https://d1ufw0nild2mi8.cloudfront.net/images/airlines/V2/srp/result_desktop/${airlineCode}.png`} />
+        </styled.LogoBoxTop>
 
-        <BoundDeparture0>
-          <StyledFontMedium>{bounds[0].departure.code}</StyledFontMedium>
-        </BoundDeparture0>
-        <BoundDeparture0Hour>
-          <StyledBoldBig>{formatHour(bounds[0].departure.dateTime)}</StyledBoldBig>
-        </BoundDeparture0Hour>
-        <BoundDeparture0Day>
-          <StyledFontMedium>{formatDay(bounds[0].departure.dateTime)}</StyledFontMedium>
-        </BoundDeparture0Day>
+        <styled.BoundDeparture0>
+          <styled.StyledFontMedium>{bounds[0].departure.code}</styled.StyledFontMedium>
+        </styled.BoundDeparture0>
+        <styled.BoundDeparture0Hour>
+          <styled.StyledBoldBig>{formatHour(bounds[0].departure.dateTime)}</styled.StyledBoldBig>
+        </styled.BoundDeparture0Hour>
+        <styled.BoundDeparture0Day>
+          <styled.StyledFontMedium>{formatDay(bounds[0].departure.dateTime)}</styled.StyledFontMedium>
+        </styled.BoundDeparture0Day>
 
-        <DurationTopBox>
-          <StyledFontMedium>{formatDuration(bounds[0].duration)}</StyledFontMedium>
-        </DurationTopBox>
+        <styled.DurationTopBox>
+          <styled.StyledFontMedium>{formatDuration(bounds[0].duration)}</styled.StyledFontMedium>
+        </styled.DurationTopBox>
 
-        <LineBoxTop>
+        <styled.LineBoxTop>
           <FontAwesomeIcon icon={faCircle} color={theme.palette.primary.main} />
-          <Line></Line>
+          <styled.Line></styled.Line>
           <FontAwesomeIcon icon={faCircle} color={theme.palette.primary.main} />
-        </LineBoxTop>
+        </styled.LineBoxTop>
 
-        <BoundDestination0>
-          <StyledFontMedium>{bounds[0].destination.code}</StyledFontMedium>
-        </BoundDestination0>
-        <BoundDestination0Hour>
-          <StyledBoldBig>{calculateDestinationHour(bounds[0].departure.dateTime, bounds[0].duration)}</StyledBoldBig>
-        </BoundDestination0Hour>
-        <BoundDestination0Day>
-          <StyledFontMedium>{formatDay(bounds[0].destination.dateTime)}</StyledFontMedium>
-        </BoundDestination0Day>
+        <styled.BoundDestination0>
+          <styled.StyledFontMedium>{bounds[0].destination.code}</styled.StyledFontMedium>
+        </styled.BoundDestination0>
+        <styled.BoundDestination0Hour>
+          <styled.StyledBoldBig>{calculateDestinationHour(bounds[0].departure.dateTime, bounds[0].duration)}</styled.StyledBoldBig>
+        </styled.BoundDestination0Hour>
+        <styled.BoundDestination0Day>
+          <styled.StyledFontMedium>{formatDay(bounds[0].destination.dateTime)}</styled.StyledFontMedium>
+        </styled.BoundDestination0Day>
 
-        <DetailsBox>
-          <StyledFontSmall onClick={handleCheckDetails}>Vluchtdetails</StyledFontSmall>
-        </DetailsBox>
+        <styled.DetailsBox>
+          <styled.StyledFontSmall onClick={handleCheckDetails}>Vluchtdetails</styled.StyledFontSmall>
+        </styled.DetailsBox>
 
-        <BorderBox />
+        <styled.BorderBox />
         {bounds[1] && (
           <>
-            <LogoBoxBottom>
-              <StyledLogo src={`https://d1ufw0nild2mi8.cloudfront.net/images/airlines/V2/srp/result_desktop/${airlineCode}.png`} />
-            </LogoBoxBottom>
+            <styled.LogoBoxBottom>
+              <styled.StyledLogo src={`https://d1ufw0nild2mi8.cloudfront.net/images/airlines/V2/srp/result_desktop/${airlineCode}.png`} />
+            </styled.LogoBoxBottom>
 
-            <BoundDeparture1>
-              <StyledFontMedium> {bounds[1].departure.code} </StyledFontMedium>
-            </BoundDeparture1>
-            <BoundDeparture1Hour>
-              <StyledBoldBig>{formatHour(bounds[1].departure.dateTime)}</StyledBoldBig>
-            </BoundDeparture1Hour>
-            <BoundDeparture1Day>
-              <StyledFontMedium>{formatDay(bounds[1].departure.dateTime)}</StyledFontMedium>
-            </BoundDeparture1Day>
+            <styled.BoundDeparture1>
+              <styled.StyledFontMedium> {bounds[1].departure.code} </styled.StyledFontMedium>
+            </styled.BoundDeparture1>
+            <styled.BoundDeparture1Hour>
+              <styled.StyledBoldBig>{formatHour(bounds[1].departure.dateTime)}</styled.StyledBoldBig>
+            </styled.BoundDeparture1Hour>
+            <styled.BoundDeparture1Day>
+              <styled.StyledFontMedium>{formatDay(bounds[1].departure.dateTime)}</styled.StyledFontMedium>
+            </styled.BoundDeparture1Day>
 
-            <DurationBottomBox>
-              <StyledFontMedium>{formatDuration(bounds[1].duration)}</StyledFontMedium>
-            </DurationBottomBox>
+            <styled.DurationBottomBox>
+              <styled.StyledFontMedium>{formatDuration(bounds[1].duration)}</styled.StyledFontMedium>
+            </styled.DurationBottomBox>
 
-            <LineBoxBottom>
+            <styled.LineBoxBottom>
               <FontAwesomeIcon icon={faCircle} color={theme.palette.primary.main} />
-              <Line></Line>
+              <styled.Line></styled.Line>
               <FontAwesomeIcon icon={faCircle} color={theme.palette.primary.main} />
-            </LineBoxBottom>
-            <BoundDestination1>
-              <StyledFontMedium>{bounds[1].destination.code}</StyledFontMedium>{" "}
-            </BoundDestination1>
-            <BoundDestination1Hour>
-              <StyledBoldBig>{calculateDestinationHour(bounds[1].departure.dateTime, bounds[1].duration)}</StyledBoldBig>
-            </BoundDestination1Hour>
-            <BoundDestination1Day>
-              <StyledFontMedium>{formatDay(bounds[1].destination.dateTime)}</StyledFontMedium>
-            </BoundDestination1Day>
+            </styled.LineBoxBottom>
+            <styled.BoundDestination1>
+              <styled.StyledFontMedium>{bounds[1].destination.code}</styled.StyledFontMedium>{" "}
+            </styled.BoundDestination1>
+            <styled.BoundDestination1Hour>
+              <styled.StyledBoldBig>{calculateDestinationHour(bounds[1].departure.dateTime, bounds[1].duration)}</styled.StyledBoldBig>
+            </styled.BoundDestination1Hour>
+            <styled.BoundDestination1Day>
+              <styled.StyledFontMedium>{formatDay(bounds[1].destination.dateTime)}</styled.StyledFontMedium>
+            </styled.BoundDestination1Day>
           </>
         )}
 
-        <PriceContainer />
-        <TriangleBox>
-          <Triangle />
-        </TriangleBox>
-        <PriceBox>
-          <PriceText>
-            <StyledBoldBig>€</StyledBoldBig>
-            <StyledBoldBig>{price.amount}</StyledBoldBig>
-            <StyledFontLight>p.p.</StyledFontLight>
-          </PriceText>
-          <ButtonBox>
-            <StyledButton onClick={handleBookFlight}>{loadingBooking ? <CircularProgress /> : "Book flight"}</StyledButton>
-          </ButtonBox>
-        </PriceBox>
-      </FlightContainer>
+        <styled.PriceContainer />
+        <styled.TriangleBox>
+          <styled.Triangle />
+        </styled.TriangleBox>
+        <styled.PriceBox>
+          <styled.PriceText>
+            <styled.StyledBoldBig>€</styled.StyledBoldBig>
+            <styled.StyledBoldBig>{price.amount}</styled.StyledBoldBig>
+            <styled.StyledFontLight>p.p.</styled.StyledFontLight>
+          </styled.PriceText>
+          <styled.ButtonBox>
+            <styled.StyledButton onClick={handleBookFlight}>{loadingBooking ? <CircularProgress /> : "Book flight"}</styled.StyledButton>
+          </styled.ButtonBox>
+        </styled.PriceBox>
+      </styled.FlightContainer>
       {openDetails && (
-        <DetailsContainer>
+        <styled.DetailsContainer>
           {loadingDetails ? <CircularProgress /> : <TableDetails currentFlightDetails={currentFlightDetails} closeDetails={setOpenDetails} />}
-        </DetailsContainer>
+        </styled.DetailsContainer>
       )}
     </>
   );

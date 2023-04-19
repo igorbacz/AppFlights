@@ -31,7 +31,3 @@ export interface Details {
   cabinClass: string;
 }
 
-export enum Paths {
-  Flights = "/flights",
-  Confirmation = "/confirmation",
-}

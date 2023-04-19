@@ -3,19 +3,19 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { FlightsProvider } from "./context/ContextProvider";
+import { FlightProvider } from "./context/ContextProvider";
 import { ThemeProvider } from "@mui/system";
 import { theme } from "./theme";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-  <FlightsProvider>
+  <FlightProvider>
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </ThemeProvider>
-  </FlightsProvider>
+  </FlightProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

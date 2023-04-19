@@ -1,7 +1,7 @@
 import { Redirect, Route, Switch } from "react-router-dom";
-import { Paths } from "../types/types";
-import { Confirmation } from "./Confirmation/Confirmation";
-import Flights from "./Flights";
+import { Confirmation } from "../components/Confirmation/Confirmation";
+import Flights from "../components/Flights";
+import { Paths } from "./routesMap";
 
 const Routes = () => {
   return (
